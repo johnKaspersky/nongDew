@@ -1,40 +1,20 @@
 var React = require('react');
+
 var ReactDOM = require('react-dom');
+
 var ons = require('onsenui');
+
 var Ons = require('react-onsenui');
+
 var client = require('./client');
-
-
-
-
-
-
 
 var MyPage = React.createClass({
   getInitialState: function() {
     return {
+      search: '',
       username: '',
-      Symptom: '',
-      Hospital: 'SUT',
-      Ambalance: 'A123',
-      Doctor: 'Chanwit',
-      diagnose:'',
-      
-      
-      vegetables: [
-        1
-      ],
-      selectedVegetable: 'Onion',
       todo:[]
     };
-  },
-
-  renderToolbar() {
-    return (
-      <Ons.Toolbar>
-        <div className='center'>History patient</div>
-      </Ons.Toolbar>
-    );
   },
   componentDidMount(){
     let todo=[]
@@ -43,7 +23,6 @@ var MyPage = React.createClass({
     var that = this;
     var url = 'http://localhost:8080/api/patients/'
         fetch(url)
-
       .then(function(response) {
       if (response.status >= 400) {
         throw new Error("Bad response from server");
@@ -55,9 +34,9 @@ var MyPage = React.createClass({
       console.log(data._embedded.patients)
       todo=data._embedded.patients
        that.setState({todo}) 
-      todo.map((d,idx)=>{
+       todo.map((d,idx)=>{
       that.setState({username:d.name})
-      that.setState({Symptom:d.symptom})
+      
 
      })
      
@@ -65,79 +44,48 @@ var MyPage = React.createClass({
     
    
   },
+
+  renderToolbar() {
+    return (
+      <Ons.Toolbar>
+        <div className='center'>Welcome</div>
+      </Ons.Toolbar>
+    );
+  },
+
+  handleClick: function() {
+    if (this.state.search == this.state.username) {
+      ons.notification.alert('found    complete is Patient :' +  this.state.username);
+    }
+    else {
+      ons.notification.alert('Not found');
+    }
+  },
   handleUsernameChange(e) {
     this.setState({username: e.target.value});
   },
-  handlediagnoseChange(e) {
-    this.setState({diagnose: e.target.value});
+  handleSearchChange(e) {
+    this.setState({search: e.target.value});
+    //console.log(e);
   },
-
-  handlePasswordChange(e) {
-    this.setState({password: e.target.value});
-  },
-
-  handleVegetableChange(vegetable) {
-    this.setState({selectedVegetable: vegetable});
-  },
-
   
 
-  renderRadioRow(row) {
-    return (
-     <Ons.ListItem>
-    <ons-list-header>Patient</ons-list-header>
-    <ons-list-item>  name :{this.state.username}</ons-list-item>
-      <ons-list-item> Symptom :{this.state.Symptom}</ons-list-item>
-    <ons-list-item>Hosptial :{this.state.Hospital}</ons-list-item>
-    <ons-list-item> Ambulance :{this.state.Ambalance} </ons-list-item>
-     <ons-list-item>Doctor :{this.state.Doctor} </ons-list-item>
-     <ons-list-item>diagnose :{this.state.diagnose} </ons-list-item>
-     </Ons.ListItem>
-    )
-  },
- handleClick(){
-      if(this.state.diagnose){
-             client({method: 'GET', path: '/vote/'+1+'/point/' + `${this.state.diagnose}`}).done(
-             ons.notification.alert('OK!')
-     )
-    }else{
-      ons.notification.alert('Data is null pls try Again ><')
-    }
-  },
   render: function() {
-    this.componentDidMount
-   
     return (
       <Ons.Page renderToolbar={this.renderToolbar}>
-  
-       <Ons.List
-          dataSource={this.state.vegetables}
-          renderRow={this.renderRadioRow}
-        />
         <section style={{textAlign: 'center'}}>
           <p>
-            
-          </p>
-          <p>
-          
-            <Ons.Input
-              value={this.state.diagnose}
-              onChange={this.handlediagnoseChange}
-              modifier='underbar'
+            <Ons.SearchInput
+              value={this.state.search}
+              onChange={this.handleSearchChange}
               float
-              placeholder='Enter  diagnose :' />
+              placeholder='Search' />
           </p>
           <p>
-            
-          </p>
-          <p>
-            <Ons.Button onClick={this.handleClick}>Save</Ons.Button>
+            <Ons.Button onClick={this.handleClick}>Search</Ons.Button>
           </p>
         </section>
 
-       
-    
-        
       </Ons.Page>
     );
   }
