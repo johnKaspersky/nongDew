@@ -21,7 +21,7 @@ public class DatabaseLoader implements CommandLineRunner {
 	
 	@Override
 	public void run(String... strings) throws Exception {
-		this.patientRepository.save(new Patient("Bancha","HOT head"));
+ 	this.patientRepository.save(new Patient("Bancha","HOT head"));
 		this.doctorRepository.save(new Doctor("Banchon"));
 		this.ambulanceRepository.save(new Ambulance("AB-213"));
 		this.hospitalRepository.save(new Hospital("SUT"));
