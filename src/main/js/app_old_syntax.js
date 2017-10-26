@@ -47,7 +47,7 @@ var MyPage = React.createClass({
       .then((response) => {
         if (response === 1) {
           navigator.popPage();
-          index = 1;
+          index =1;
         }
 
       });
@@ -166,23 +166,16 @@ var MyPage = React.createClass({
 
   pushPage: function (navigator) {
     navigator.pushPage({
-      title: `ใบสรุปผล `,
-      hasBackButton: true
-
-
-    });
-
-    index = 1;
-  },
-
-  pushPage: function (navigator) {
-    navigator.pushPage({
       title: `ผลการค้นหา `,
       hasBackButton: true
 
+
     });
+
     index++;
   },
+
+  
 
 
 
@@ -213,12 +206,8 @@ var MyPage = React.createClass({
           );
 
         }
-    else if (index === 2) {
-      if (this.state.search === this.state.username) {
-
-
-        console.log(index)
-
+    else if (index === 2 && this.state.username===this.state.search) {
+       console.log(index)
         return (
           <Ons.Page key={route.title} renderToolbar={this.renderToolbar.bind(this, route, navigator)}>
             <Ons.ListItem>ชื่อคนไข้ :{this.state.username}</Ons.ListItem>
@@ -245,9 +234,10 @@ var MyPage = React.createClass({
           </Ons.Page>
 
         );
-      } else {
-        console.log(index)
-
+      
+    }
+    else if(this.state.username!=this.state.search){
+       console.log(index)
         return (
 
           <Ons.Page key={route.title} renderToolbar={this.renderToolbar.bind(this, route, navigator)}>
@@ -258,8 +248,9 @@ var MyPage = React.createClass({
           </Ons.Page>
 
         );
-      }
-    } else if (index === 3) {
+      3
+    }
+     else if (index ===3) {
       console.log(index)
 
 
