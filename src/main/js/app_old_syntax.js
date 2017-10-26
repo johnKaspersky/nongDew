@@ -12,7 +12,7 @@ var MyPage = React.createClass({
       Symptom: '',
       Hospital: 'SUT',
       Ambalance: 'A123',
-      Doctor: 'Chanwit',
+      Doctor: '',
       diagnose:'',
       search:' ',
       
@@ -22,6 +22,7 @@ var MyPage = React.createClass({
       ],
       selectedVegetable: 'Onion',
       todo:[]
+      
     };
   },
 
@@ -54,7 +55,7 @@ var MyPage = React.createClass({
 
   componentDidMount(){
     let todo=[]
-    let todo2=[]
+   
     console.log("Hi React");
     var that = this;
     var url = 'http://localhost:8080/api/patients/'
@@ -77,19 +78,12 @@ var MyPage = React.createClass({
      
     });
     
-   
+ 
   },
+ 
 
   
-  Cancel_OnClick(){
-    if (this.state.search == this.state.username) {
-      ons.notification.alert('found    complete is Patient :' +  this.state.username);
-    }
-    else {
-      ons.notification.alert('Not found');
-    }
   
-  },
 
    handleUsernameChange(e) {
     this.setState({username: e.target.value});
@@ -99,21 +93,30 @@ var MyPage = React.createClass({
   },
 
   handleSearchChange(e) {
-    this.setState({search: e.target.value});
+    this.setState({search: e.target.value.trim()});
   },
+
 
   handleVegetableChange(vegetable) {
     this.setState({selectedVegetable: vegetable});
   },
-  
-  
- 
- 
 
   pushPage: function(navigator) {
-    handleSearchChange(e);
     navigator.pushPage({
+   title: `ใบสรุปผล `,
+   hasBackButton: true
+  
+ });
+ if(index===3){
+   index--;
+ }
+ index++;
+},
+ 
+    pushPage: function(navigator) {
+       navigator.pushPage({
       title: `ผลการค้นหา `,
+      
       hasBackButton: true
      
     });
@@ -123,21 +126,14 @@ var MyPage = React.createClass({
     index++;
   },
 
-  pushPage: function(navigator) {
-    
-    navigator.pushPage({
-      title: `ใบวินิจฉัย `,
-      hasBackButton: true
-    
-    });
-    if(index===3){
-      index--;
-    }
-    index++;
-  },
+  
+
+
 
     renderPage: function(route, navigator) {
       this.componentDidMount
+      
+      
        
     if(index==1){
       return (
@@ -151,7 +147,7 @@ var MyPage = React.createClass({
               placeholder='Search' />
               
           </p>
-          <p>
+         <p>
        </p>
       
        
@@ -161,61 +157,72 @@ var MyPage = React.createClass({
           </section>
         </Ons.Page>
       );
-      } else  if(index==2){
-      
-              if(this.state.search == this.state.username){
+      }
+       else  if(index===2){
+      if(this.state.search === this.state.username){
                 return ( 
                   <Ons.Page key={route.title} renderToolbar={this.renderToolbar.bind(this, route, navigator)}>
-                  <Ons.ListHeader>ชื่อ {this.state.username}:</Ons.ListHeader>
-                  <Ons.ListHeader>อาการป่วย : {this.state.NameId}</Ons.ListHeader>
-                <Ons.ListHeader> //  :{this.state.RoomId} </Ons.ListHeader>
+                  <Ons.ListItem>ชื่อคนไข้ :{this.state.username}</Ons.ListItem>
+                  <Ons.ListItem>อาการป่วย : {this.state.Symptom}</Ons.ListItem>
+                <Ons.ListItem> หมอที่ดูแล :{this.state.Doctor} </Ons.ListItem>
+                <Ons.ListItem> วินิจฉัยอาการ :{this.state.diagnose} </Ons.ListItem>
+                <section style={{textAlign: 'center'}}>
+                <p>
+                  <Ons.Input
+                    value={this.state.diagnose}
+                    onChange={this.handlediagnoseChange}
+                    modifier='underbar'
+                    float
+                    placeholder='กรุณากรอกข้อมุล' />
+                </p>
+              </section>
               <section style={{margin: '16px', textAlign: 'center'}}>
-                        <Ons.Button onClick={this.pushPage.bind(this, navigator)}>
-                          Next
-                        </Ons.Button>
-                      </section>
-                       </Ons.Page>
+              <Ons.Button onClick={this.handleClick_SAVE}>Save</Ons.Button>
+             </section>
+
+              <section style={{margin: '16px', textAlign: 'center'}}>
+              <Ons.Button onClick={this.pushPage.bind(this, navigator)}> ดูใบบันทึกการส่งตัว </Ons.Button>
+           
+                  </section>
+                  </Ons.Page>
                                 
                   );
-              }
-              else {
+              } else {
                 return ( 
+                  
                   <Ons.Page key={route.title} renderToolbar={this.renderToolbar.bind(this, route, navigator)}>
-                          
-                    <Ons.ListHeader>ไม่มีคนไข้ในระบบ :{this.state.search}</Ons.ListHeader>
-                     <section style={{margin: '16px', textAlign: 'center'}}>
+                    <Ons.ListHeader>ไม่มีคนไข้ในระบบ (ชื่อของsearch) :{this.state.search}</Ons.ListHeader>
+                 <section style={{margin: '16px', textAlign: 'center'}}>
                       <Ons.BackButton onClick={this.handleClick.bind(this, navigator)}>Back</Ons.BackButton>
                       </section>
                        </Ons.Page>
                                 
                   );
               }
-      }else if(index==3){
-        
+       }else if(index === 3){
+        <Ons.Page key={route.title} renderToolbar={this.renderToolbar.bind(this, route, navigator)}>
+        <Ons.ListHeader>ชื่อคนไข้ :{this.state.username}</Ons.ListHeader>
+        <Ons.ListHeader>อาการป่วย:{this.state.Symptom} </Ons.ListHeader>
+         <section style={{margin: '16px', textAlign: 'center'}}>
+          <Ons.BackButton onClick={this.handleClick.bind(this, navigator)}>Back</Ons.BackButton>
+          </section>
+           </Ons.Page>
+                    
 
-        return (
-          <Ons.Page key={route.title} renderToolbar={this.renderToolbar.bind(this, route, navigator)}>
-            <p style={{textAlign: 'center'}}>
-            
-           <p>
-               <Ons.ListHeader>ชื่อคนไข้: {this.state.username}</Ons.ListHeader>
-            
-               <Ons.ListHeader>อาการป่วย :{b} </Ons.ListHeader>
-               
-               <Ons.ListHeader>ผลการวินิจฉัย : {h}</Ons.ListHeader>
-    
-              </p>
-            
+    }
          
-          </p>
-         
-          </Ons.Page>
-          );
-      }
-     
-
-        
   },
+
+  handleClick_SAVE(){
+    if(this.state.diagnose){
+           client({method: 'GET', path: '/vote/'+1+'/point/' + `${this.state.diagnose}`}).done(
+           ons.notification.alert('OK!')
+   )
+  }else{
+    ons.notification.alert('Data is null pls try Again ><')
+  }
+},
+
 
 
   render: function() {

@@ -1,0 +1,10 @@
+ if(false){
+          <Ons.ListHeader>ชื่อ {this.state.username}:</Ons.ListHeader>
+        <Ons.ListHeader>อาการป่วย : {this.state.NameId}</Ons.ListHeader>
+      <Ons.ListHeader> //  :{this.state.RoomId} </Ons.ListHeader>
+    <section style={{margin: '16px', textAlign: 'center'}}>
+              <Ons.Button onClick={this.pushPage.bind(this, navigator)}>
+                Next
+              </Ons.Button>
+            </section>
+     }
