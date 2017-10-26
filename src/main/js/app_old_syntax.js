@@ -4,7 +4,6 @@ var ons = require('onsenui');
 var Ons = require('react-onsenui');
 var client = require('./client');
 var index = 1;
-
 var MyPage = React.createClass({
   getInitialState: function () {
     return {
@@ -48,11 +47,12 @@ var MyPage = React.createClass({
       .then((response) => {
         if (response === 1) {
           navigator.popPage();
-          index=1;
+          index = 1;
         }
-        
+
       });
   },
+
 
   componentDidMount() {
     let todo = []
@@ -107,21 +107,19 @@ var MyPage = React.createClass({
     navigator.pushPage({
       title: `ใบสรุปผล `,
       hasBackButton: true
-    
+
 
     });
 
-    index=1;
+    index = 1;
   },
 
   pushPage: function (navigator) {
     navigator.pushPage({
       title: `ผลการค้นหา `,
-
       hasBackButton: true
 
     });
-
     index++;
   },
 
@@ -131,35 +129,35 @@ var MyPage = React.createClass({
 
   renderPage: function (route, navigator) {
     this.componentDidMount
+        if (index == 1) {
+     
+          return (
+            <Ons.Page key={route.title} renderToolbar={this.renderToolbar.bind(this, route, navigator)}>
+              <section style={{ textAlign: 'center' }}>
+                <p>
+                  <Ons.SearchInput
+                    value={this.state.search}
+                    onChange={this.handleSearchChange}
+                    float
+                    placeholder='Search' />
 
+                </p>
+                <p>
+                </p>
+              </section>
+              <section style={{ margin: '16px', textAlign: 'center' }}>
+                <Ons.Button onClick={this.pushPage.bind(this, navigator)}>Next</Ons.Button>
+              </section>
+            </Ons.Page>
+          );
 
-
-    if (index == 1) {
-      return (
-        <Ons.Page key={route.title} renderToolbar={this.renderToolbar.bind(this, route, navigator)}>
-          <section style={{ textAlign: 'center' }}>
-            <p>
-              <Ons.SearchInput
-                value={this.state.search}
-                onChange={this.handleSearchChange}
-                float
-                placeholder='Search' />
-
-            </p>
-            <p>
-            </p>
-
-
-          </section>
-          <section style={{ margin: '16px', textAlign: 'center' }}>
-            <Ons.Button onClick={this.pushPage.bind(this, navigator)}>Next</Ons.Button>
-          </section>
-        </Ons.Page>
-      );
-    }
+        }
     else if (index === 2) {
       if (this.state.search === this.state.username) {
+
+
         console.log(index)
+
         return (
           <Ons.Page key={route.title} renderToolbar={this.renderToolbar.bind(this, route, navigator)}>
             <Ons.ListItem>ชื่อคนไข้ :{this.state.username}</Ons.ListItem>
@@ -187,6 +185,8 @@ var MyPage = React.createClass({
 
         );
       } else {
+        console.log(index)
+
         return (
 
           <Ons.Page key={route.title} renderToolbar={this.renderToolbar.bind(this, route, navigator)}>
@@ -199,12 +199,14 @@ var MyPage = React.createClass({
         );
       }
     } else if (index === 3) {
-      
+      console.log(index)
+
+
       return (<Ons.Page key={route.title} renderToolbar={this.renderToolbar.bind(this, route, navigator)}>
 
         <Ons.ListHeader>ชื่อคนไข้ :{this.state.username}</Ons.ListHeader>
         <Ons.ListHeader>อาการป่วย:{this.state.Symptom} </Ons.ListHeader>
-        
+
       </Ons.Page>
       );
 
