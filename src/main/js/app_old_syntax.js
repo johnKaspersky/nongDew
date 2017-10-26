@@ -241,7 +241,7 @@ var MyPage = React.createClass({
         return (
 
           <Ons.Page key={route.title} renderToolbar={this.renderToolbar.bind(this, route, navigator)}>
-            <Ons.ListHeader>ไม่มีคนไข้ในระบบ (ชื่อของsearch) :{this.state.search}</Ons.ListHeader>
+            <Ons.ListItem>ไม่มีคนไข้ :{this.state.search}: ในระบบ</Ons.ListItem>
             <section style={{ margin: '16px', textAlign: 'center' }}>
               <Ons.BackButton onClick={this.handleClick.bind(this, navigator)}>Back</Ons.BackButton>
             </section>
