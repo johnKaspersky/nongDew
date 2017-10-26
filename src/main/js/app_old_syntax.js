@@ -9,8 +9,8 @@ var MyPage = React.createClass({
     return {
       username: '',
       Symptom: '',
-      Hospital: 'SUT',
-      Ambalance: 'A123',
+      Hospital: '',
+      Ambalance: '',
       Doctor: '',
       diagnose: '',
       search: ' ',
@@ -60,6 +60,9 @@ var MyPage = React.createClass({
     console.log("Hi React");
     var that = this;
     var url = 'http://localhost:8080/api/patients/'
+    var url2 ='http://localhost:8080/api/doctors/'
+    var url3 ='http://localhost:8080/api/ambulances/'
+    var url4 ='http://localhost:8080/api/hospitals/'
     fetch(url)
       .then(function (response) {
         if (response.status >= 400) {
@@ -78,6 +81,61 @@ var MyPage = React.createClass({
         })
 
       });
+      fetch(url2)
+      .then(function (response) {
+        if (response.status >= 400) {
+          throw new Error("Bad response from server");
+        }
+        return response.json();
+      })
+      .then(function (data) {
+        // that.setState({ person: data.person });
+        console.log(data._embedded.doctors)
+        todo = data._embedded.doctors
+        that.setState({ todo })
+        todo.map((d,idx) => {
+          that.setState({Doctor:d.name })
+         
+          })
+
+      });
+      fetch(url3)
+      .then(function (response) {
+        if (response.status >= 400) {
+          throw new Error("Bad response from server");
+        }
+        return response.json();
+      })
+      .then(function (data) {
+        // that.setState({ person: data.person });
+        console.log(data._embedded.ambulances)
+        todo = data._embedded.ambulances
+        that.setState({ todo })
+        todo.map((d,idx) => {
+          that.setState({Ambalance:d.aname})
+          
+          })
+
+      });
+      fetch(url4)
+      .then(function (response) {
+        if (response.status >= 400) {
+          throw new Error("Bad response from server");
+        }
+        return response.json();
+      })
+      .then(function (data) {
+        // that.setState({ person: data.person });
+        console.log(data._embedded.hospitals)
+        todo = data._embedded.hospitals
+        that.setState({ todo })
+        todo.map((d,idx) => {
+          that.setState({Hospital:d.hname})
+          
+          })
+
+      });
+      
 
 
   },
@@ -88,6 +146,9 @@ var MyPage = React.createClass({
 
   handleUsernameChange(e) {
     this.setState({ username: e.target.value });
+  },
+  handleDoctorChange(e) {
+    this.setState({ Doctor: e.target.value });
   },
   handlediagnoseChange(e) {
     this.setState({ diagnose: e.target.value.trim() });
@@ -204,9 +265,12 @@ var MyPage = React.createClass({
 
       return (<Ons.Page key={route.title} renderToolbar={this.renderToolbar.bind(this, route, navigator)}>
 
-        <Ons.ListHeader>ชื่อคนไข้ :{this.state.username}</Ons.ListHeader>
-        <Ons.ListHeader>อาการป่วย:{this.state.Symptom} </Ons.ListHeader>
-
+        <Ons.ListItem>ชื่อคนไข้ :{this.state.username}</Ons.ListItem>
+        <Ons.ListItem>อาการป่วย:{this.state.Symptom} </Ons.ListItem>
+        <Ons.ListItem>ผลการวินิจฉัย:{this.state.diagnose} </Ons.ListItem>
+        <Ons.ListItem>หมอที่ดูแล:{this.state.Doctor} </Ons.ListItem>
+        <Ons.ListItem>รถพยาบาลนำส่ง:{this.state.Ambalance} </Ons.ListItem>
+        <Ons.ListItem>โรงพยาบาล:{this.state.Hospital} </Ons.ListItem>
       </Ons.Page>
       );
 
