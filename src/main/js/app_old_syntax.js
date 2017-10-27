@@ -213,17 +213,18 @@ var MyPage = React.createClass({
             <Ons.ListItem>ชื่อคนไข้ :{this.state.username}</Ons.ListItem>
             <Ons.ListItem>อาการป่วย : {this.state.Symptom}</Ons.ListItem>
             <Ons.ListItem> หมอที่ดูแล :{this.state.Doctor} </Ons.ListItem>
-            <Ons.ListItem> วินิจฉัยอาการ :{this.state.diagnose} </Ons.ListItem>
-            <section style={{ textAlign: 'center' }}>
-              <p>
+            <Ons.ListItem>
+              <div className='center'>
+                วินิจฉัยอาการ :
                 <Ons.Input
                   value={this.state.diagnose}
                   onChange={this.handlediagnoseChange}
                   modifier='underbar'
                   float
                   placeholder='กรุณากรอกข้อมุล' />
-              </p>
-            </section>
+               </div>
+
+            </Ons.ListItem>
             <section style={{ margin: '16px', textAlign: 'center' }}>
               <Ons.Button onClick={this.handleClick_SAVE}>Save</Ons.Button>
             </section>
